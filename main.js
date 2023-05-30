@@ -102,17 +102,6 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         }
       });
-
-      // Close description when clicking anywhere on the screen
-      document.addEventListener("click", function (event) {
-        if (!description.contains(event.target)) {
-          description.classList.remove("active");
-          let closeButton = description.querySelector(".close-button");
-          if (closeButton) {
-            closeButton.remove();
-          }
-        }
-      });
     });
 
     // Close navbar when clicking anywhere on the screen
