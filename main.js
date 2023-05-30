@@ -60,3 +60,29 @@ homeLinks.forEach((link) => {
     navbar.classList.remove("show"); // Hide the navbar after clicking a link
   });
 });
+
+//mobilephone feature
+document.addEventListener("DOMContentLoaded", function () {
+  if (window.innerWidth <= 768) {
+    var images = document.querySelectorAll(".image");
+
+    images.forEach(function (image) {
+      var description = image.querySelector(".description");
+
+      if (!description) {
+        description = document.createElement("div");
+        description.classList.add("description");
+        image.appendChild(description);
+      }
+
+      var mobileButton = document.createElement("div");
+      mobileButton.classList.add("mobile-button");
+      mobileButton.textContent = "View Description";
+      image.appendChild(mobileButton);
+
+      mobileButton.addEventListener("click", function () {
+        description.classList.toggle("active");
+      });
+    });
+  }
+});
