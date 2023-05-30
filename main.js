@@ -64,10 +64,10 @@ homeLinks.forEach((link) => {
 //mobilephone feature
 document.addEventListener("DOMContentLoaded", function () {
   if (window.innerWidth <= 768) {
-    var images = document.querySelectorAll(".image");
+    let images = document.querySelectorAll(".image");
 
     images.forEach(function (image) {
-      var description = image.querySelector(".description");
+      let description = image.querySelector(".description");
 
       if (!description) {
         description = document.createElement("div");
@@ -75,14 +75,51 @@ document.addEventListener("DOMContentLoaded", function () {
         image.appendChild(description);
       }
 
-      var mobileButton = document.createElement("div");
+      let mobileButton = document.createElement("div");
       mobileButton.classList.add("mobile-button");
-      mobileButton.textContent = "View Description";
+      mobileButton.textContent = "View The Stories";
       image.appendChild(mobileButton);
 
       mobileButton.addEventListener("click", function () {
         description.classList.toggle("active");
+
+        if (description.classList.contains("active")) {
+          let closeButton = document.createElement("span");
+          closeButton.innerHTML = "X";
+          closeButton.classList.add("close-button");
+
+          closeButton.addEventListener("click", function (event) {
+            event.stopPropagation();
+            description.classList.remove("active");
+            this.remove();
+          });
+
+          description.appendChild(closeButton);
+        } else {
+          let closeButton = description.querySelector(".close-button");
+          if (closeButton) {
+            closeButton.remove();
+          }
+        }
       });
+
+      // Close description when clicking anywhere on the screen
+      document.addEventListener("click", function (event) {
+        if (!description.contains(event.target)) {
+          description.classList.remove("active");
+          let closeButton = description.querySelector(".close-button");
+          if (closeButton) {
+            closeButton.remove();
+          }
+        }
+      });
+    });
+
+    // Close navbar when clicking anywhere on the screen
+    document.addEventListener("click", function (event) {
+      if (!navbar.contains(event.target) && !toggleNav.contains(event.target)) {
+        navbar.classList.remove("show");
+      }
     });
   }
 });
