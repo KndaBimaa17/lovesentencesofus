@@ -81,34 +81,28 @@ document.addEventListener("DOMContentLoaded", function () {
       image.appendChild(mobileButton);
 
       mobileButton.addEventListener("click", function () {
-        description.classList.toggle("active");
+        description.classList.add("active");
+        mobileButton.style.display = "none";
+        let closeButton = document.createElement("span");
+        closeButton.innerHTML = "X";
+        closeButton.classList.add("close-button");
 
-        if (description.classList.contains("active")) {
-          let closeButton = document.createElement("span");
-          closeButton.innerHTML = "X";
-          closeButton.classList.add("close-button");
+        closeButton.addEventListener("click", function (event) {
+          event.stopPropagation();
+          description.classList.remove("active");
+          mobileButton.style.display = "block";
+          this.remove();
+        });
 
-          closeButton.addEventListener("click", function (event) {
-            event.stopPropagation();
-            description.classList.remove("active");
-            this.remove();
-          });
-
-          description.appendChild(closeButton);
-        } else {
-          let closeButton = description.querySelector(".close-button");
-          if (closeButton) {
-            closeButton.remove();
-          }
-        }
+        description.appendChild(closeButton);
       });
     });
+  }
+});
 
-    // Close navbar when clicking anywhere on the screen
-    document.addEventListener("click", function (event) {
-      if (!navbar.contains(event.target) && !toggleNav.contains(event.target)) {
-        navbar.classList.remove("show");
-      }
-    });
+// Close navbar when clicking anywhere on the screen
+document.addEventListener("click", function (event) {
+  if (!navbar.contains(event.target) && !toggleNav.contains(event.target)) {
+    navbar.classList.remove("show");
   }
 });
