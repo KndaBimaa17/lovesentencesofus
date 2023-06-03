@@ -291,12 +291,7 @@ input.asing:checked ~ .photo-gallery .image.asing {
   object-fit: cover;
   margin-top: 0;
 }
-
 /* END POP UP */
-
-/* @media new */
-@media (max-width: 768px) {
-}
 
 /* @media mobile phone */
 @media (max-width: 450px) {
