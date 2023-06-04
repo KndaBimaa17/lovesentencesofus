@@ -61,41 +61,54 @@ homeLinks.forEach((link) => {
   });
 });
 
-//mobilephone feature
 document.addEventListener("DOMContentLoaded", function () {
   if (window.innerWidth <= 768) {
     let images = document.querySelectorAll(".image");
 
     images.forEach(function (image) {
-      let description = image.querySelector(".description");
-
-      if (!description) {
-        description = document.createElement("div");
-        description.classList.add("description");
-        image.appendChild(description);
-      }
+      let description = document.createElement("div");
+      description.classList.add("description");
+      description.textContent = image.dataset.text;
+      image.appendChild(description);
 
       let mobileButton = document.createElement("div");
       mobileButton.classList.add("mobile-button");
       mobileButton.textContent = "View The Stories";
       image.appendChild(mobileButton);
 
-      mobileButton.addEventListener("click", function () {
-        description.classList.add("active");
+      mobileButton.addEventListener("click", function (event) {
+        event.stopPropagation(); // Menghentikan event klik gambar dari mempengaruhi deskripsi
+        description.classList.toggle("active");
         mobileButton.style.display = "none";
+
         let closeButton = document.createElement("span");
         closeButton.innerHTML = "X";
         closeButton.classList.add("close-button");
+        description.appendChild(closeButton);
 
         closeButton.addEventListener("click", function (event) {
           event.stopPropagation();
           description.classList.remove("active");
           mobileButton.style.display = "block";
-          this.remove();
+          closeButton.remove();
         });
-
-        description.appendChild(closeButton);
       });
+    });
+
+    // Menambahkan event listener ke setiap gambar untuk menyembunyikan deskripsi saat diklik di bagian lain
+    document.addEventListener("click", function (event) {
+      if (!event.target.classList.contains("mobile-button")) {
+        images.forEach(function (image) {
+          let description = image.querySelector(".description");
+          description.classList.remove("active");
+          let mobileButton = image.querySelector(".mobile-button");
+          mobileButton.style.display = "block";
+          let closeButton = image.querySelector(".close-button");
+          if (closeButton) {
+            closeButton.remove();
+          }
+        });
+      }
     });
   }
 });
